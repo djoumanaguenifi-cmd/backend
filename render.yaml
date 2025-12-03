@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: student-service
+    env: java
+    buildCommand: ./mvnw -DskipTests clean package
+    startCommand: java -jar target/*.jar
+    envVars:
+      - key: SPRING_DATASOURCE_URL
+        value: jdbc:postgresql://dpg-d4ipa495pdvs7385l450-a.oregon-postgres.render.com:5432/tp8db?sslmode=require
+      - key: SPRING_DATASOURCE_USERNAME
+        value: tp8db_user
+      - key: SPRING_DATASOURCE_PASSWORD
+        value: oGGX5s55BfzhhCLMpxHvw8KEol6FHBs9
+      - key: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+        value: org.postgresql.Driver
+      - key: SPRING_JPA_HIBERNATE_DDL_AUTO
+        value: update
+      - key: SERVER_PORT
+        value: ${PORT}
+      - key: SERVER_ADDRESS
+        value: 0.0.0.0
