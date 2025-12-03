@@ -1,17 +1,12 @@
-# Utiliser une image Java officielle
-FROM eclipse-temurin:17-jdk
-
-# Définir le répertoire de travail
+# Étape 1 : Builder l'application
+FROM eclipse-temurin:17-jdk AS build
 WORKDIR /app
-
-# Copier le code source
 COPY . .
-
-# Builder avec Maven Wrapper
 RUN ./mvnw -DskipTests clean package
 
-# Exposer le port
+# Étape 2 : Lancer l'application
+FROM eclipse-temurin:17-jre
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Lancer l'application
-CMD ["java", "-jar", "target/*.jar"]
+CMD ["java", "-jar", "app.jar"]
